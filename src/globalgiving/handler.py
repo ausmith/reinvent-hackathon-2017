@@ -8,7 +8,6 @@ Author: Mindo, Aaron, Kavita, David
 import os
 import logging
 from src.common.registration import Registration
-# from twilio.rest import Client
 
 twilio_sid_register = os.environ['twilio_sid_register']
 twilio_sid_update = os.environ['twilio_sid_update']
@@ -21,7 +20,7 @@ log.setLevel(logging.DEBUG)
 
 
 def register_globalgiving(event, context):
-    log.info(event)
+    reg = Registration(event)
 
 
 def update_globalgiving(event, context):

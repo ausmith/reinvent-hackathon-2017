@@ -1,4 +1,10 @@
+import os
+
 
 class Registration():
-    
-    def foo(self):
+
+    def __init__(self, event):
+        self.event = event
+
+    def validateData(self):
+        pass
