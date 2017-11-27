@@ -20,6 +20,7 @@ log.setLevel(logging.DEBUG)
 
 
 def register_globalgiving(event, context):
+    log.info(event)
     reg = Registration(event)
 
 
