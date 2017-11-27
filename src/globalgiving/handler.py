@@ -19,18 +19,9 @@ log = logging.getLogger('logger')
 log.setLevel(logging.DEBUG)
 
 
-def post_globalgiving(event, context):
+def register_globalgiving(event, context):
     log.info(event)
-    handleEvent(event)
 
 
-def handleEvent(event):
-    """
-        We want to handle all of our
-    """
-    if event['type'] == 'create':
-        pass
-    elif event['type'] == 'update':
-        pass
-    else:
-        raise Exception('Request type is not allowed')
+def update_globalgiving(event, context):
+    log.info(event)

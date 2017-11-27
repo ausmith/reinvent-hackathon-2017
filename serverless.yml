@@ -54,7 +54,7 @@ plugins:
   - serverless-parameters
  
 functions:
-  globalgiving_post:
+  globalgiving_register:
     handler: src/globalgiving/handler.post_globalgiving
     description: Post global giving data
     timeout: 30
@@ -63,4 +63,14 @@ functions:
       - http:
           path: /globalgiving/post
           method: post
+  globalgiving_update:
+    handler: src/globalgiving/handler.update_globalgiving
+    description: Post global giving data
+    timeout: 30
+    memorySize: 256
+    events:
+      - http:
+          path: /globalgiving/update
+          method: post
+  
  
