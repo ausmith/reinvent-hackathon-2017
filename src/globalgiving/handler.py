@@ -8,6 +8,7 @@ Author: Mindo, Aaron, Kavita, David
 import os
 import logging
 from src.common.registration import Registration
+from twilio.twiml.messaging_response import MessagingResponse
 
 twilio_sid_register = os.environ['twilio_sid_register']
 twilio_sid_update = os.environ['twilio_sid_update']
@@ -21,7 +22,15 @@ log.setLevel(logging.DEBUG)
 
 def register_globalgiving(event, context):
     log.info(event)
+    resp = MessagingResponse()
     reg = Registration(event)
+
+    if reg.validateData():
+        resp.message("6782646400")
+    else:
+        resp.message("Try again")
+
+    return str(resp)
 
 
 def update_globalgiving(event, context):
