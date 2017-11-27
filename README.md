@@ -1,2 +1,4 @@
-# reinvent-hackathon-2017
-AWS re:Invent hackathon 2017 project, table 20, GlobalGiving
+# GlobalGiving Hackathon Project
+
+GlobalGiving: (globalgiving.org)[https://www.globalgiving.org/]
+Goal: Implement method for field agents to provide project updates via cellular networks.
