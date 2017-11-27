@@ -20,7 +20,7 @@ log.setLevel(logging.DEBUG)
 
 
 def post_globalgiving(event, context):
-
+    log.info(event)
     handleEvent(event)
 
 
