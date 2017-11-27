@@ -55,7 +55,7 @@ plugins:
  
 functions:
   globalgiving_register:
-    handler: src/globalgiving/handler.post_globalgiving
+    handler: src/globalgiving/handler.register_globalgiving
     description: Post global giving data
     timeout: 30
     memorySize: 256
