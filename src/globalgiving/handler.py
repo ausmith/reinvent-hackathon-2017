@@ -7,6 +7,7 @@ Author: Mindo, Aaron, Kavita, David
 
 import os
 import logging
+from src.common.registration import Registration
 # from twilio.rest import Client
 
 twilio_sid_register = os.environ['twilio_sid_register']
