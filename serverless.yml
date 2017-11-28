@@ -73,5 +73,14 @@ functions:
       - http:
           path: /globalgiving/update
           method: post
+  globalgiving_publish:
+    handler: src/globalgiving/handler.publish_globalgiving
+    description: Send out updates
+    timeout: 30
+    memorySize: 256
+    events:
+      - schedule:
+          rate: rate(12 hours)
+          enabled: false
   
  

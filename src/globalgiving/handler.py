@@ -10,6 +10,7 @@ import logging
 import json
 from src.common.registration import Registration
 from src.common.update import Update
+from src.common.report import Report
 from twilio.twiml.messaging_response import Body, Message, MessagingResponse
 
 twilio_sid_register = os.environ['twilio_sid_register']
@@ -26,31 +27,22 @@ def register_globalgiving(event, context):
     log.info(event)
     response = MessagingResponse()
     message = Message()
-
+    result = None
     reg = Registration(event)
 
-    result = None
     if reg.execute():
         message.body("6782646400")
-        response.append(message)
-        result = {
-            "statusCode": 200,
-            "headers": {
-                "Content-Type": "application/xml"
-            },
-            "body": str(response)
-        }
     else:
         message.body("resend")
-        response.append(message)
-        result = {
-            "statusCode": 200,
-            "headers": {
-                "Content-Type": "application/xml"
-            },
-            "body": str(response)
-        }
 
+    response.append(message)
+    result = {
+        "statusCode": 200,
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "body": str(response)
+    }
     return result
 
 
@@ -58,29 +50,29 @@ def update_globalgiving(event, context):
     log.info(event)
     response = MessagingResponse()
     message = Message()
-
-    reg = Update(event)
-
     result = None
-    if reg.execute():
+    upd = Update(event)
+
+    if upd.execute():
         message.body("ack")
-        response.append(message)
-        result = {
-            "statusCode": 200,
-            "headers": {
-                "Content-Type": "application/xml"
-            },
-            "body": str(response)
-        }
     else:
         message.body("resend")
-        response.append(message)
-        result = {
-            "statusCode": 200,
-            "headers": {
-                "Content-Type": "application/xml"
-            },
-            "body": str(response)
-        }
 
+    response.append(message)
+    result = {
+        "statusCode": 200,
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "body": str(response)
+    }
     return result
+
+
+def publish_globalgiving(event, context):
+    log.info(event)
+    report = Report()
+    report.execute()
+    log.info(report.size())
+
+
