@@ -9,7 +9,7 @@ import os
 import logging
 import json
 from src.common.registration import Registration
-from twilio.twiml.messaging_response import MessagingResponse
+from twilio.twiml.messaging_response import Body, Message, MessagingResponse
 
 twilio_sid_register = os.environ['twilio_sid_register']
 twilio_sid_update = os.environ['twilio_sid_update']
@@ -23,22 +23,34 @@ log.setLevel(logging.DEBUG)
 
 def register_globalgiving(event, context):
     log.info(event)
-    resp = MessagingResponse()
+    response = MessagingResponse()
+    message = Message()
+
     reg = Registration(event)
 
-    response = None
+    result = None
     if reg.execute():
-        response = {
+        message.body("6782646400")
+        response.append(message)
+        result = {
             "statusCode": 200,
-            "body": json.loads(str(resp.message("6782646400")))
+            "headers": {
+                "Content-Type": "application/xml"
+            },
+            "body": json.dumps(response)
         }
     else:
-        response = {
+        message.body("6782646400")
+        response.append(message)
+        result = {
             "statusCode": 200,
-            "body": json.loads(str(resp.message("Try again")))
+            "headers": {
+                "Content-Type": "application/xml"
+            },
+            "body": json.dumps(response)
         }
 
-    return response
+    return result
 
 
 def update_globalgiving(event, context):
