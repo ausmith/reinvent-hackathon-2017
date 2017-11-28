@@ -9,6 +9,7 @@ import os
 import logging
 import json
 from src.common.registration import Registration
+from src.common.update import Update
 from twilio.twiml.messaging_response import Body, Message, MessagingResponse
 
 twilio_sid_register = os.environ['twilio_sid_register']
@@ -40,7 +41,7 @@ def register_globalgiving(event, context):
             "body": str(response)
         }
     else:
-        message.body("6782646400")
+        message.body("try again")
         response.append(message)
         result = {
             "statusCode": 200,
@@ -55,3 +56,31 @@ def register_globalgiving(event, context):
 
 def update_globalgiving(event, context):
     log.info(event)
+    response = MessagingResponse()
+    message = Message()
+
+    reg = Update(event)
+
+    result = None
+    if reg.execute():
+        message.body("ack")
+        response.append(message)
+        result = {
+            "statusCode": 200,
+            "headers": {
+                "Content-Type": "application/xml"
+            },
+            "body": str(response)
+        }
+    else:
+        message.body("try again")
+        response.append(message)
+        result = {
+            "statusCode": 200,
+            "headers": {
+                "Content-Type": "application/xml"
+            },
+            "body": str(response)
+        }
+
+    return result
