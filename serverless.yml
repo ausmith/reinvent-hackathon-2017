@@ -35,6 +35,7 @@ provider:
         - ec2:DeleteNetworkInterface
         - kms:Decrypt
         - ssm:*
+        - dynamodb:*
       Resource: "*"
   
 custom:
