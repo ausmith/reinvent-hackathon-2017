@@ -37,7 +37,7 @@ def register_globalgiving(event, context):
             "headers": {
                 "Content-Type": "application/xml"
             },
-            "body": json.dumps(response)
+            "body": str(response)
         }
     else:
         message.body("6782646400")
@@ -47,7 +47,7 @@ def register_globalgiving(event, context):
             "headers": {
                 "Content-Type": "application/xml"
             },
-            "body": json.dumps(response)
+            "body": str(response)
         }
 
     return result
