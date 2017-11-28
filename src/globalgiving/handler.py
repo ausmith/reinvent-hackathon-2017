@@ -7,6 +7,7 @@ Author: Mindo, Aaron, Kavita, David
 
 import os
 import logging
+import json
 from src.common.registration import Registration
 from twilio.twiml.messaging_response import MessagingResponse
 
@@ -25,12 +26,19 @@ def register_globalgiving(event, context):
     resp = MessagingResponse()
     reg = Registration(event)
 
+    response = None
     if reg.execute():
-        resp.message("6782646400")
+        response = {
+            "statusCode": 200,
+            "body": json.loads(resp.message("6782646400"))
+        }
     else:
-        resp.message("Try again")
+        response = {
+            "statusCode": 200,
+            "body": json.loads(resp.message("Try again"))
+        }
 
-    return str(resp)
+    return response
 
 
 def update_globalgiving(event, context):
