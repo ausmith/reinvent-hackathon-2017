@@ -1,6 +1,6 @@
 import os
 import boto3
-from urllib.parse import unquote
+from urllib.parse import parse_qs
 
 
 class Registration():
@@ -14,15 +14,13 @@ class Registration():
 
     def execute(self):
         self.buildDataStruct()
-        return self.table.put_item(Item=self.payload)
+        self.table.put_item(Item=self.payload)
+        return True
 
     def buildDataStruct(self):
-        sms_data = self.event['body'].split('&')
-        sid = sms_data[2].split('=')
-        email = sms_data[16].split('=')
-        from_number = sms_data[6].split('=')
+        sms_data = parse_qs(self.event['body'])
         self.payload = {
-            'smssid': unquote(sid[1]),
-            'email': unquote(email[1]),
-            'from_number': unquote(from_number[1])
+            'smssid': sms_data['SmsSid'][0],
+            'email': sms_data['Body'][0],
+            'from_number': sms_data['From'][0]
         }

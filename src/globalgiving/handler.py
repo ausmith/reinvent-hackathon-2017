@@ -4,6 +4,7 @@ Lambda handler for global giving
 Author: Mindo, Aaron, Kavita, David
 """
 # -*- coding: utf-8 -*-
+
 import os
 import logging
 from src.common.registration import Registration
