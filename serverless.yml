@@ -1,0 +1,87 @@
+service: ${self:custom.project_name}
+
+provider:
+  name: aws
+  runtime: python3.6
+  region: us-east-1
+  environment: ${file(serverless.env.yml):.env}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - logs:CreateLogGroup
+        - logs:CreateLogStream
+        - logs:PutLogEvents
+      Resource:
+        - 'Fn::Join':
+          - ':'
+          -
+            - 'arn:aws:logs'
+            - Ref: 'AWS::Region'
+            - Ref: 'AWS::AccountId'
+            - 'log-group:/aws/lambda/*:*:*'
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+      Resource: "*"
+    - Effect: Allow
+      Action:
+        - ssm:*
+      Resource: "*"
+    - Effect: Allow
+      Action:
+        - ec2:CreateNetworkInterface
+        - ec2:DescribeNetworkInterfaces
+        - ec2:DetachNetworkInterface
+        - ec2:DeleteNetworkInterface
+        - kms:Decrypt
+        - ssm:*
+        - dynamodb:*
+        - s3:*
+      Resource: "*"
+  
+custom:
+  project_name: globalgiving 
+
+package:
+  include:
+    - src/**
+  exclude:
+    - node_modules/**
+    - src/requirements.txt
+    - src/lib/**
+    - /**
+
+plugins:
+  - serverless-python-requirements
+  - serverless-parameters
+ 
+functions:
+  globalgiving_register:
+    handler: src/globalgiving/handler.register_globalgiving
+    description: Post global giving data
+    timeout: 30
+    memorySize: 256
+    events:
+      - http:
+          path: /globalgiving/post
+          method: post
+  globalgiving_update:
+    handler: src/globalgiving/handler.update_globalgiving
+    description: Post global giving data
+    timeout: 30
+    memorySize: 256
+    events:
+      - http:
+          path: /globalgiving/update
+          method: post
+  globalgiving_publish:
+    handler: src/globalgiving/handler.publish_globalgiving
+    description: Send out updates
+    timeout: 30
+    memorySize: 256
+    events:
+      - schedule:
+          rate: rate(12 hours)
+          enabled: false
+  
+ 
