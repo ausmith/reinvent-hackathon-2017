@@ -36,6 +36,7 @@ provider:
         - kms:Decrypt
         - ssm:*
         - dynamodb:*
+        - s3:*
       Resource: "*"
   
 custom:
