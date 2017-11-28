@@ -4,7 +4,6 @@ Lambda handler for global giving
 Author: Mindo, Aaron, Kavita, David
 """
 # -*- coding: utf-8 -*-
-
 import os
 import logging
 from src.common.registration import Registration
@@ -25,7 +24,7 @@ def register_globalgiving(event, context):
     resp = MessagingResponse()
     reg = Registration(event)
 
-    if reg.validateData():
+    if reg.execute():
         resp.message("6782646400")
     else:
         resp.message("Try again")
