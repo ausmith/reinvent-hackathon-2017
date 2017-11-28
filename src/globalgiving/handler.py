@@ -41,7 +41,7 @@ def register_globalgiving(event, context):
             "body": str(response)
         }
     else:
-        message.body("try again")
+        message.body("resend")
         response.append(message)
         result = {
             "statusCode": 200,
@@ -73,7 +73,7 @@ def update_globalgiving(event, context):
             "body": str(response)
         }
     else:
-        message.body("try again")
+        message.body("resend")
         response.append(message)
         result = {
             "statusCode": 200,
