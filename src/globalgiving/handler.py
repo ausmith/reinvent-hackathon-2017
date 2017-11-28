@@ -30,12 +30,12 @@ def register_globalgiving(event, context):
     if reg.execute():
         response = {
             "statusCode": 200,
-            "body": json.loads(resp.message("6782646400"))
+            "body": json.loads(str(resp.message("6782646400")))
         }
     else:
         response = {
             "statusCode": 200,
-            "body": json.loads(resp.message("Try again"))
+            "body": json.loads(str(resp.message("Try again")))
         }
 
     return response
